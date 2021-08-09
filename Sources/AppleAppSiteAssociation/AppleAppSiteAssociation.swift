@@ -1,7 +1,29 @@
 public struct AppleAppSiteAssociation : Codable, Equatable {
+	/// The root object for a universal links service definition.
+	///
+	/// Use this object to define the universal links you want to associate with your domain. Add the JSON code to your apple-app-site-association file along with the app identifiers for the apps that you designate to handle universal links for your domain.
 	public struct AppLinks : Codable, Equatable {
+		/// A list of apps and the universal links they handle for a domain.
+		///
+		/// All keys in the details object are optional.
+		///
+		/// Use appIDs to specify the apps that can access the specific URLs you define in the associated components array. You specify the application identifiers in the following format:
+		/// ```
+		/// <Application Identifier Prefix>.<Bundle Identifier>
+		/// ```
 		public struct Details : Codable, Equatable {
-			public struct Component : Codable, Equatable {
+			/// Patterns that define the universal links an app can open.
+			///
+			/// Use this object to define whether an associated app can open specific URLs in this domain as universal links. The order that you use to specify the patterns in the array determines the order the system follows when looking for a match. The first match wins, allowing you to designate one app to handle specified URLs in your website, and another app to handle the rest.
+			///
+			/// You can also use the following wildcards in your URL pattern-matching definitions:
+			/// - * — Matches zero or more characters. This performs a greedy match and matches as many characters as possible.
+			/// - ? — Matches any single character.
+			///
+			/// In addition, you can use ?* to match one or more characters (that is, at least one character).
+			///
+			/// A match occurs when a URL matches all the components that a components object specifies.
+			public struct Components : Codable, Equatable {
 				public enum Query: Codable, Equatable {
 					case single(String)
 					case multiple([String: String])
@@ -60,12 +82,20 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 				public var percentEncoded: Bool = true
 			}
 
+			/// An array of application identifiers that specify the apps that can handle the universal links in the components array.
 			public var appIDs: [String]
-			public var defaults: Component = .init()
-			public var components: [Component] = []
+
+			/// A dictionary for defining the default settings to use for all universal links pattern matching in the components array.
+			public var defaults: Components = .init()
+
+			/// An array of components that define the universal link URLs an app can handle.
+			public var components: [Components] = []
 		}
 
-		public var defaults: Details.Component = .init()
+		/// The global pattern-matching settings to use as defaults for all universal links in the domain.
+		public var defaults: Details.Components = .init()
+
+		/// An array of Details objects that define the apps and the universal links they handle for the domain.
 		public var details: [Details]
 	}
 
@@ -90,12 +120,12 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 	public var webcredentials: WebCredentials = .init(apps: [])
 }
 
-extension AppleAppSiteAssociation.AppLinks.Details.Component.Query: ExpressibleByStringLiteral {
+extension AppleAppSiteAssociation.AppLinks.Details.Components.Query: ExpressibleByStringLiteral {
 	public init(stringLiteral value: StringLiteralType) {
 		self = .single(value)
 	}
 }
-extension AppleAppSiteAssociation.AppLinks.Details.Component.Query: ExpressibleByDictionaryLiteral {
+extension AppleAppSiteAssociation.AppLinks.Details.Components.Query: ExpressibleByDictionaryLiteral {
 	public init(dictionaryLiteral elements: (String, String)...) {
 		self = .multiple([String : String](uniqueKeysWithValues: elements))
 	}

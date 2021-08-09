@@ -1,8 +1,8 @@
 import XCTest
 import AppleAppSiteAssociation
 
-final class AppleAppSiteAssociation_AppLink_Details_Component_Query_Tests: XCTestCase {
-	typealias Query = AppleAppSiteAssociation.AppLinks.Details.Component.Query
+final class AppleAppSiteAssociation_AppLink_Details_Components_Query_Tests: XCTestCase {
+	typealias Query = AppleAppSiteAssociation.AppLinks.Details.Components.Query
 
 	func test__initWithStringLiteral__anyString__expectedValueInitialised() throws {
 		let expected: Query = .single("foo")
