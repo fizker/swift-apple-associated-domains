@@ -69,7 +69,25 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 		public var details: [Details]
 	}
 
+	public struct WebCredentials : Codable, Equatable {
+		public var apps: [String]
+
+		public init(apps: [String]) {
+			self.apps = apps
+		}
+	}
+
+	public struct AppClips : Codable, Equatable {
+		public var apps: [String]
+
+		public init(apps: [String]) {
+			self.apps = apps
+		}
+	}
+
 	public var applinks: AppLinks?
+	public var appclips: AppClips = .init(apps: [])
+	public var webcredentials: WebCredentials = .init(apps: [])
 }
 
 extension AppleAppSiteAssociation.AppLinks.Details.Component.Query: ExpressibleByStringLiteral {
@@ -80,5 +98,27 @@ extension AppleAppSiteAssociation.AppLinks.Details.Component.Query: ExpressibleB
 extension AppleAppSiteAssociation.AppLinks.Details.Component.Query: ExpressibleByDictionaryLiteral {
 	public init(dictionaryLiteral elements: (String, String)...) {
 		self = .multiple([String : String](uniqueKeysWithValues: elements))
+	}
+}
+
+extension AppleAppSiteAssociation.AppClips: ExpressibleByStringLiteral {
+	public init(stringLiteral value: StringLiteralType) {
+		self.init(apps: [ value ])
+	}
+}
+extension AppleAppSiteAssociation.AppClips: ExpressibleByArrayLiteral {
+	public init(arrayLiteral elements: String...) {
+		self.init(apps: elements)
+	}
+}
+
+extension AppleAppSiteAssociation.WebCredentials: ExpressibleByStringLiteral {
+	public init(stringLiteral value: StringLiteralType) {
+		self.init(apps: [ value ])
+	}
+}
+extension AppleAppSiteAssociation.WebCredentials: ExpressibleByArrayLiteral {
+	public init(arrayLiteral elements: String...) {
+		self.init(apps: elements)
 	}
 }
