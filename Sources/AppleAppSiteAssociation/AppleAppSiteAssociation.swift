@@ -54,10 +54,10 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 					case path = "/"
 					case query = "?"
 					case fragment = "#"
-					case exclude
+					case isExcludingMatches = "exclude"
 					case comment
-					case caseSensitive
-					case percentEncoded
+					case isCaseSensitive = "caseSensitive"
+					case isPercentEncoded = "percentEncoded"
 				}
 
 				/// The pattern to match with the URL path component. The default is *, which matches everything.
@@ -70,33 +70,33 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 				public var fragment: String = "*"
 
 				/// A Boolean value that indicates whether to stop pattern matching and prevent the universal link from opening if the URL matches the associated pattern. The default is false.
-				public var exclude: Bool = false
+				public var isExcludingMatches: Bool = false
 
 				/// Text that the system ignores. Use this to provide information about the URLs a pattern matches.
 				public var comment: String?
 
 				/// A Boolean value that indicates whether pattern matching is case-sensitive. The default is true.
-				public var caseSensitive: Bool = true
+				public var isCaseSensitive: Bool = true
 
 				/// A Boolean value that indicates whether URLs are percent-encoded. The default is true.
-				public var percentEncoded: Bool = true
+				public var isPercentEncoded: Bool = true
 
 				public init(
 					path: String = "*",
 					query: Query = .single("*"),
 					fragment: String = "*",
-					exclude: Bool = false,
+					isExcludingMatches: Bool = false,
 					comment: String? = nil,
-					caseSensitive: Bool = true,
-					percentEncoded: Bool = true
+					isCaseSensitive: Bool = true,
+					isPercentEncoded: Bool = true
 				) {
 					self.path = path
 					self.query = query
 					self.fragment = fragment
-					self.exclude = exclude
+					self.isExcludingMatches = isExcludingMatches
 					self.comment = comment
-					self.caseSensitive = caseSensitive
-					self.percentEncoded = percentEncoded
+					self.isCaseSensitive = isCaseSensitive
+					self.isPercentEncoded = isPercentEncoded
 				}
 			}
 
