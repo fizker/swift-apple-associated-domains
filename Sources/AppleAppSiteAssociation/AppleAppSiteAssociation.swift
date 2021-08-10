@@ -157,6 +157,26 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 		self.appclips = appclips
 		self.webcredentials = webcredentials
 	}
+
+	enum CodingKeys: String, CodingKey {
+		case applinks, appclips, webcredentials
+	}
+
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+
+		if applinks != nil {
+			try container.encode(applinks, forKey: .applinks)
+		}
+
+		if !appclips.apps.isEmpty {
+			try container.encode(appclips, forKey: .appclips)
+		}
+
+		if !webcredentials.apps.isEmpty {
+			try container.encode(webcredentials, forKey: .webcredentials)
+		}
+	}
 }
 
 extension AppleAppSiteAssociation.AppLinks.Details.Components.Query: ExpressibleByStringLiteral {
