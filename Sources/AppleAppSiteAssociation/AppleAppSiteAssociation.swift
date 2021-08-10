@@ -124,6 +124,10 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 			}
 		}
 
+		enum CodingKeys: String, CodingKey {
+			case defaults, details
+		}
+
 		/// The global pattern-matching settings to use as defaults for all universal links in the domain.
 		public var defaults: Details.Components
 
