@@ -80,6 +80,24 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 
 				/// A Boolean value that indicates whether URLs are percent-encoded. The default is true.
 				public var percentEncoded: Bool = true
+
+				public init(
+					path: String = "*",
+					query: Query = .single("*"),
+					fragment: String = "*",
+					exclude: Bool = false,
+					comment: String? = nil,
+					caseSensitive: Bool = true,
+					percentEncoded: Bool = true
+				) {
+					self.path = path
+					self.query = query
+					self.fragment = fragment
+					self.exclude = exclude
+					self.comment = comment
+					self.caseSensitive = caseSensitive
+					self.percentEncoded = percentEncoded
+				}
 			}
 
 			/// An array of application identifiers that specify the apps that can handle the universal links in the components array.
@@ -90,13 +108,28 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 
 			/// An array of components that define the universal link URLs an app can handle.
 			public var components: [Components] = []
+
+			public init(
+				appIDs: [String],
+				defaults: Components = .init(),
+				components: [Components] = []
+			) {
+				self.appIDs = appIDs
+				self.defaults = defaults
+				self.components = components
+			}
 		}
 
 		/// The global pattern-matching settings to use as defaults for all universal links in the domain.
-		public var defaults: Details.Components = .init()
+		public var defaults: Details.Components
 
 		/// An array of Details objects that define the apps and the universal links they handle for the domain.
 		public var details: [Details]
+
+		public init(details: [Details], defaults: Details.Components = .init()) {
+			self.details = details
+			self.defaults = defaults
+		}
 	}
 
 	public struct WebCredentials : Codable, Equatable {
@@ -116,8 +149,14 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 	}
 
 	public var applinks: AppLinks?
-	public var appclips: AppClips = .init(apps: [])
-	public var webcredentials: WebCredentials = .init(apps: [])
+	public var appclips: AppClips
+	public var webcredentials: WebCredentials
+
+	public init(applinks: AppLinks? = nil, appclips: AppClips = .init(apps: []), webcredentials: WebCredentials = .init(apps: [])) {
+		self.applinks = applinks
+		self.appclips = appclips
+		self.webcredentials = webcredentials
+	}
 }
 
 extension AppleAppSiteAssociation.AppLinks.Details.Components.Query: ExpressibleByStringLiteral {

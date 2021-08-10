@@ -29,7 +29,13 @@ final class AppleAppSiteAssociation_AppLink_Details_Components_Query_Tests: XCTe
 		let multiple: Query = .multiple([ "foo": "123", "bar": "456" ])
 
 		XCTAssertEqual(try encodeToString(single), #""foo""#)
-		XCTAssertEqual(try encodeToString(multiple), #"{"bar":"456","foo":"123"}"#)
+		XCTAssertEqual(try encodeToString(multiple), """
+			{
+			  "bar" : "456",
+			  "foo" : "123"
+			}
+			"""
+		)
 	}
 
 	func test__decode__bothValues__decodesCorrectly() throws {
@@ -38,18 +44,5 @@ final class AppleAppSiteAssociation_AppLink_Details_Components_Query_Tests: XCTe
 
 		XCTAssertEqual(single, .single("foo"))
 		XCTAssertEqual(multiple, .multiple([ "foo": "123", "bar": "456" ]))
-	}
-
-	func encodeToString<T: Encodable>(_ value: T) throws -> String {
-		let encoder = JSONEncoder()
-		encoder.outputFormatting = .sortedKeys
-		let data = try encoder.encode(value)
-		return String(data: data, encoding: .utf8)!
-	}
-
-	func decodeFromString<T: Decodable>(_ value: String) throws -> T {
-		let decoder = JSONDecoder()
-		let data = value.data(using: .utf8)!
-		return try decoder.decode(T.self, from: data)
 	}
 }
