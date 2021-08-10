@@ -1,5 +1,5 @@
 import XCTest
-import AppleAppSiteAssociation
+import AppleAssociatedDomains
 
 final class AppClips_Tests: XCTestCase {
 	typealias AppClips = AppleAppSiteAssociation.AppClips

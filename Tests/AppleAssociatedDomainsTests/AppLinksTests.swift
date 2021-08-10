@@ -1,8 +1,8 @@
 import XCTest
-import AppleAppSiteAssociation
+import AppleAssociatedDomains
 
-final class DetailsTests: XCTestCase {
-	typealias Details = AppleAppSiteAssociation.AppLinks.Details
+final class AppLinksTests: XCTestCase {
+	typealias AppLinks = AppleAppSiteAssociation.AppLinks
 
 	func test__decode__minObject_defaultValue__decodesCorrectly() throws {
 		let json = """
@@ -11,8 +11,8 @@ final class DetailsTests: XCTestCase {
 			}
 			"""
 
-		let actual: Details = try decodeFromString(json)
-		let expected = Details(appIDs: [])
+		let actual: AppLinks = try decodeFromString(json)
+		let expected = AppLinks(details: [])
 
 		XCTAssertEqual(actual, expected)
 	}
@@ -20,20 +20,9 @@ final class DetailsTests: XCTestCase {
 	func test__decode__fullObject__decodesCorrectly() throws {
 		let json = """
 			{
-			  "appIDs": [
-			    "foo"
-			  ],
-			  "components": [
+			  "details": [
 			    {
-			      "?" : {
-			        "some" : "query"
-			      },
-			      "/" : "/some/path",
-			      "#" : "some-fragment",
-			      "caseSensitive" : false,
-			      "comment" : "Some comment",
-			      "exclude" : true,
-			      "percentEncoded" : false
+			      "appIDs": [ "foo", "bar" ]
 			    }
 			  ],
 			  "defaults": {
@@ -50,9 +39,11 @@ final class DetailsTests: XCTestCase {
 			}
 			"""
 
-		let actual: Details = try decodeFromString(json)
-		let expected = Details(
-			appIDs: [ "foo" ],
+		let actual: AppLinks = try decodeFromString(json)
+		let expected = AppLinks(
+			details: [
+				.init(appIDs: [ "foo", "bar" ]),
+			],
 			defaults: .init(
 				path: "/some/path",
 				query: [ "some": "query" ],
@@ -61,26 +52,17 @@ final class DetailsTests: XCTestCase {
 				comment: "Some comment",
 				isCaseSensitive: false,
 				isPercentEncoded: false
-			),
-			components: [
-				.init(
-					path: "/some/path",
-					query: [ "some": "query" ],
-					fragment: "some-fragment",
-					isExcludingMatches: true,
-					comment: "Some comment",
-					isCaseSensitive: false,
-					isPercentEncoded: false
-				)
-			]
+			)
 		)
 
 		XCTAssertEqual(expected, actual)
 	}
 
 	func test__encode__fullObject_nonDefaultValue__encodesCorrectly() throws {
-		let value = Details(
-			appIDs: [ "foo" ],
+		let value = AppLinks(
+			details: [
+				.init(appIDs: [ "foo", "bar" ]),
+			],
 			defaults: .init(
 				path: "/some/path",
 				query: [ "some": "query" ],
@@ -89,39 +71,12 @@ final class DetailsTests: XCTestCase {
 				comment: "Some comment",
 				isCaseSensitive: false,
 				isPercentEncoded: false
-			),
-			components: [
-				.init(
-					path: "/some/path",
-					query: [ "some": "query" ],
-					fragment: "some-fragment",
-					isExcludingMatches: true,
-					comment: "Some comment",
-					isCaseSensitive: false,
-					isPercentEncoded: false
-				)
-			]
+			)
 		)
 
 		let actual = try encodeToString(value)
 		let expected = """
 			{
-			  "appIDs" : [
-			    "foo"
-			  ],
-			  "components" : [
-			    {
-			      "?" : {
-			        "some" : "query"
-			      },
-			      "/" : "/some/path",
-			      "#" : "some-fragment",
-			      "caseSensitive" : false,
-			      "comment" : "Some comment",
-			      "exclude" : true,
-			      "percentEncoded" : false
-			    }
-			  ],
 			  "defaults" : {
 			    "?" : {
 			      "some" : "query"
@@ -132,7 +87,15 @@ final class DetailsTests: XCTestCase {
 			    "comment" : "Some comment",
 			    "exclude" : true,
 			    "percentEncoded" : false
-			  }
+			  },
+			  "details" : [
+			    {
+			      "appIDs" : [
+			        "foo",
+			        "bar"
+			      ]
+			    }
+			  ]
 			}
 			"""
 
@@ -140,12 +103,12 @@ final class DetailsTests: XCTestCase {
 	}
 
 	func test__encode__minObject_defaultValue__encodesCorrectly() throws {
-		let value = Details(appIDs: [ ])
+		let value = AppLinks(details: [])
 
 		let actual = try encodeToString(value)
 		let expected = """
 			{
-			  "appIDs" : [
+			  "details" : [
 
 			  ]
 			}

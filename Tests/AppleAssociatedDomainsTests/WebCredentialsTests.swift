@@ -1,7 +1,7 @@
 import XCTest
-import AppleAppSiteAssociation
+import AppleAssociatedDomains
 
-final class WebCredentials_Tests: XCTestCase {
+final class WebCredentialsTests: XCTestCase {
 	typealias WebCredentials = AppleAppSiteAssociation.WebCredentials
 
 	func test__initWithStringLiteral__anyString__initsWithSingleApp() throws {

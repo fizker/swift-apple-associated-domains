@@ -1,5 +1,5 @@
 import XCTest
-import AppleAppSiteAssociation
+import AppleAssociatedDomains
 
 final class AppleAppSiteAssociationTests: XCTestCase {
 	func test__encode__empty__encodesCorrectly() throws {

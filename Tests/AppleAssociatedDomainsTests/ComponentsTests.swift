@@ -1,5 +1,5 @@
 import XCTest
-import AppleAppSiteAssociation
+import AppleAssociatedDomains
 
 final class ComponentsTests: XCTestCase {
 	typealias Components = AppleAppSiteAssociation.AppLinks.Details.Components
