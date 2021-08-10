@@ -109,6 +109,10 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 			/// An array of components that define the universal link URLs an app can handle.
 			public var components: [Components] = []
 
+			enum CodingKeys: String, CodingKey {
+				case defaults, components, appIDs
+			}
+
 			public init(
 				appIDs: [String],
 				defaults: Components = .init(),
