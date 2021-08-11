@@ -15,7 +15,7 @@ import PackageDescription
 let package = Package(
   name: "MyTool",
   dependencies: [
-    .package(url: "https://github.com/fizker/swift-apple-associated-domains.git", .upToNextMajor(from: "1.0")),
+    .package(url: "https://github.com/fizker/swift-apple-associated-domains.git", .upToNextMajor(from: "1.0.0")),
   ],
   targets: [
     .target(name: "MyTarget", dependencies: [
