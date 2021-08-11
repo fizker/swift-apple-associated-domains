@@ -156,6 +156,9 @@ public struct AppleAppSiteAssociation : Codable, Equatable {
 		}
 	}
 
+	public static let serverPath = "/.well-known/apple-app-site-association"
+	public var serverPath: String { Self.serverPath }
+
 	public var applinks: AppLinks?
 	public var appclips: AppClips
 	public var webcredentials: WebCredentials
