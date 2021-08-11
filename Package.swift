@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-	name: "AppleAssociatedDomains",
+	name: "swift-apple-associated-domains",
 	products: [
 		.library(
 			name: "AppleAssociatedDomains",
