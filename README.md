@@ -2,6 +2,8 @@
 
 JSON model for creating or parsing [Apple´s Associated Domains specification][AAD].
 
+To use this with [Vapor][vapor], see [the swift-apple-associated-domains-vapor convenience project][swift-AAD-vapor].
+
 ## Usage
 
 ### Declare SwiftPM dependency with release tag
@@ -13,7 +15,7 @@ Add this repository to the Package.swift manifest of your project:
 import PackageDescription
 
 let package = Package(
-  name: "MyTool",
+  name: "MyServer",
   dependencies: [
     .package(url: "https://github.com/fizker/swift-apple-associated-domains.git", .upToNextMajor(from: "1.0.0")),
   ],
@@ -75,4 +77,6 @@ let json = try jsonEncoder.encode(spec)
 server.get(path: spec.serverPath, content: json)
 ```
 
+[vapor]: https://vapor.codes
 [AAD]: https://developer.apple.com/documentation/Xcode/supporting-associated-domains
+[swift-AAD-vapor]: https://github.com/fizker/swift-apple-associated-domains-vapor
